@@ -6,4 +6,4 @@
 
 ## New Libary
 
-- Kavo Library](https://xheptcofficial.gitbook.io/kavo-library)
+- [Kavo Library](https://xheptcofficial.gitbook.io/kavo-library)
