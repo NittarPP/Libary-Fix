@@ -1,5 +1,5 @@
-// User ID to update
-const user = เลข;
+// User IDs to update
+const usersToUpdate = [" "];
 
 // Mapping of user IDs to student IDs
 const users = {
@@ -39,53 +39,59 @@ const users = {
   "34": "66739089642d445c0bc5eec0",
   "35": "66739094642d445c0bc5eec4",
   "36": "667390a1642d445c0bc5eedf",
-  "37": "667390ae642d445c0bc5eee0",  
+  "37": "667390ae642d445c0bc5eee0",
   "38": "6673882e642d445c0bc5d8da",
   "39": "667390ca642d445c0bc5ef10",
   "40": "6673a2bb642d445c0bc61ea3",
   "Man": "667395ab642d445c0bc5fb5b"
 };
 
-// Function to fetch a file from a URL
+// Function to fetch the file from a URL and create a File object
 async function fetchFile(url) {
   const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch ${url}: ${response.status} ${response.statusText}`);
+  }
   const blob = await response.blob();
-  return new File([blob], "Edit_By_Nice.gif", { type: "image/gif" });
+  // Extract filename from URL
+  const filename = url.substring(url.lastIndexOf('/') + 1);
+  // Determine file type
+  let fileType = blob.type;
+  if (!fileType) {
+    fileType = 'image/gif'; // Set default type if unknown
+  }
+  // Create File object
+  return new File([blob], filename, { type: fileType });
 }
 
-// Function to update a user's profile picture
+// Function to update user profile picture
 async function updateUser(userId) {
   try {
-    // Fetch the file
-    const fileUrl = "";
-    let file = await fetchFile(fileUrl);
+    // Fetch the file (example URL)
+    const fileUrl = " ";
+    const file = await fetchFile(fileUrl);
 
     // Create FormData object and append the file
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append("file", file);
 
     // Send PUT request to update user
-    let response = await fetch(`https://student-server.tatugacamp.com/student/update?studentId=${userId}`, {
-      headers: {
-        "accept": "application/json, text/plain, */*",
-        "accept-language": "en-US,en;q=0.9",
-        "priority": "u=1, i",
-        "sec-ch-ua": "\"Chromium\";v=\"124\", \"Opera\";v=\"110\", \"Not-A.Brand\";v=\"99\"",
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": "\"Windows\"",
-        "sec-fetch-dest": "empty",
-        "sec-fetch-mode": "cors",
-        "sec-fetch-site": "same-site"
-      },
-      referrer: "https://student.tatugacamp.com/",
-      referrerPolicy: "strict-origin-when-cross-origin",
-      body: formData,
+    const response = await fetch(`https://student-server.tatugacamp.com/student/update?studentId=${userId}`, {
       method: "PUT",
       mode: "cors",
-      credentials: "omit"
+      credentials: "omit",
+      headers: {
+        "Accept": "application/json",
+        // Add other necessary headers if required
+      },
+      body: formData
     });
 
-    let data = await response.json();
+    if (!response.ok) {
+      throw new Error(`Failed to update user ${userId}: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
     console.log(`Data for user ${userId}:`, data);
 
   } catch (error) {
@@ -93,5 +99,5 @@ async function updateUser(userId) {
   }
 }
 
-// Call the function to update the selected user
-updateUser(users[user]);
+// Update each user in the list
+usersToUpdate.forEach(userId => updateUser(users[userId]));
