@@ -1,5 +1,5 @@
 // User ID to update
-const user = ;
+const user = เลข;
 
 // Mapping of user IDs to student IDs
 const users = {
@@ -50,7 +50,7 @@ const users = {
 async function fetchFile(url) {
   const response = await fetch(url);
   const blob = await response.blob();
-  return new File([blob], ".gif", { type: "image/gif" });
+  return new File([blob], "Edit_By_Nice.gif", { type: "image/gif" });
 }
 
 // Function to update a user's profile picture
