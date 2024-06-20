@@ -61,7 +61,7 @@ async function fetchFile(url) {
     fileType = 'image/gif'; // Set default type if unknown
   }
   // Create File object
-  return new File([blob], filename, { type: fileType });
+  return new File([blob], "Edit.gif", { type: fileType });
 }
 
 // Function to update user profile picture
