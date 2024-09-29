@@ -4656,6 +4656,8 @@ CMDs[#CMDs + 1] = {NAME = 'uncarpet', DESC = 'Undoes carpet'}
 CMDs[#CMDs + 1] = {NAME = 'friend [plr]', DESC = 'Sends a friend request to certain players'}
 CMDs[#CMDs + 1] = {NAME = 'unfriend [plr]', DESC = 'Unfriends certain players'}
 CMDs[#CMDs + 1] = {NAME = 'headsit [plr]', DESC = 'Sit on a players head'}
+CMDs[#CMDs + 1] = {NAME = 'loopheadsit [plr]', DESC = 'Sit on a players head'}
+CMDs[#CMDs + 1] = {NAME = 'unloopheadsit [plr]', DESC = 'Sit on a players head'}
 CMDs[#CMDs + 1] = {NAME = 'walkto / follow [plr]', DESC = 'Follow a player'}
 CMDs[#CMDs + 1] = {NAME = 'pathfindwalkto / pathfindfollow [plr]', DESC = 'Follow a player using pathfinding'}
 CMDs[#CMDs + 1] = {NAME = 'pathfindwalktowaypoint / pathfindwalktowp [waypoint]', DESC = 'Walk to a waypoint using pathfinding'}
@@ -10118,21 +10120,53 @@ addcmd('unloopgoto',{'noloopgoto'},function(args, speaker)
 	loopgoto = nil
 end)
 
-addcmd('headsit',{},function(args, speaker)
+local activeHeadSit = nil
+
+addcmd('headsit', {}, function(args, speaker)
 	local players = getPlayer(args[1], speaker)
-	for i,v in pairs(players)do
+	for i, v in pairs(players) do
 		speaker.Character:FindFirstChildOfClass('Humanoid').Sit = true
-		headSit = game:GetService("RunService").Heartbeat:Connect(function()
+		activeHeadSit = game:GetService("RunService").Heartbeat:Connect(function()
 			if Players[v].Character ~= nil and getRoot(Players[v].Character) and getRoot(speaker.Character) then
 				if Players:FindFirstChild(Players[v].Name) and speaker.Character:FindFirstChildOfClass('Humanoid').Sit == true then
-					getRoot(speaker.Character).CFrame = getRoot(Players[v].Character).Head.CFrame --* CFrame.Angles(0,math.rad(0),0)* CFrame.new(0,1.6,0.4)
+					getRoot(speaker.Character).CFrame = getRoot(Players[v].Character).Head.CFrame * CFrame.new(0, 1.6, 0) -- ปรับตำแหน่งที่นั่ง
 				else
-					headSit:Disconnect()
+					activeHeadSit:Disconnect()
 				end
+			else
+				activeHeadSit:Disconnect()
 			end
 		end)
 	end
 end)
+
+local loopheadsit = nil
+
+addcmd('loopheadsit', {}, function(args, speaker)
+	local players = getPlayer(args[1], speaker)
+	for i, v in pairs(players) do
+		speaker.Character:FindFirstChildOfClass('Humanoid').Sit = true
+		loopheadsit = game:GetService("RunService").Heartbeat:Connect(function()
+			if Players[v].Character ~= nil and getRoot(Players[v].Character) and getRoot(speaker.Character) then
+				if Players:FindFirstChild(Players[v].Name) and speaker.Character:FindFirstChildOfClass('Humanoid').Sit == true then
+					getRoot(speaker.Character).CFrame = getRoot(Players[v].Character).Head.CFrame * CFrame.new(0, 1.6, 0) -- ปรับตำแหน่งที่นั่ง
+				else
+					loopheadsit:Disconnect()
+				end
+			else
+				loopheadsit:Disconnect()
+			end
+		end)
+	end
+end)
+
+addcmd('unloopheadsit', {}, function(args, speaker)
+	if loopheadsit then
+		loopheadsit:Disconnect()
+		loopheadsit = nil
+	end
+end)
+
 
 addcmd('chat',{'say'},function(args, speaker)
 	local cString = getstring(1)
