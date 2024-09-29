@@ -1,7 +1,7 @@
 --[[
 Created by Edge
 Redistributed by WeAreDevs: https://wearedevs.net/scripts
-ReMake by Nittarvp
+
 Description: A command line cheat with over 6 years of development
 
 Instruction: Execute this script and wait for an interface to appear on your game screen.
@@ -10125,8 +10125,7 @@ addcmd('headsit', {}, function(args, speaker)
 		headSit = game:GetService("RunService").Heartbeat:Connect(function()
 			if Players[v].Character ~= nil and getRoot(Players[v].Character) and getRoot(speaker.Character) then
 				if Players:FindFirstChild(Players[v].Name) and speaker.Character:FindFirstChildOfClass('Humanoid').Sit == true then
-					local headCFrame = getRoot(Players[v].Character).Head.CFrame
-					getRoot(speaker.Character).CFrame = headCFrame * CFrame.new(0, 1.6, 0) -- ตั้งตำแหน่งด้านบนหัว
+					getRoot(speaker.Character).CFrame = getRoot(Players[v].Character).Head.CFrame * CFrame.new(0, 1.6, 0)
 				else
 					headSit:Disconnect()
 				end
@@ -10134,6 +10133,7 @@ addcmd('headsit', {}, function(args, speaker)
 		end)
 	end
 end)
+
 
 addcmd('chat',{'say'},function(args, speaker)
 	local cString = getstring(1)
