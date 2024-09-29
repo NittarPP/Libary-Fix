@@ -10125,7 +10125,7 @@ addcmd('headsit',{},function(args, speaker)
 		headSit = game:GetService("RunService").Heartbeat:Connect(function()
 			if Players[v].Character ~= nil and getRoot(Players[v].Character) and getRoot(speaker.Character) then
 				if Players:FindFirstChild(Players[v].Name) and speaker.Character:FindFirstChildOfClass('Humanoid').Sit == true then
-					getRoot(speaker.Character).CFrame = getRoot(Players[v].Character).Head.CFrame --* CFrame.Angles(0,math.rad(0),0)* CFrame.new(0,1.6,0.4)
+					getRoot(speaker.Character).CFrame = getRoot(Players[v].Character).Head.CFrame * CFrame.Angles(0,math.rad(0),0)* CFrame.new(0,1.6,0.4)
 				else
 					headSit:Disconnect()
 				end
