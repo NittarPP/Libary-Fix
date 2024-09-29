@@ -1,7 +1,7 @@
 --[[
 Created by Edge
 Redistributed by WeAreDevs: https://wearedevs.net/scripts
-
+ReMake by Nittarvp
 Description: A command line cheat with over 6 years of development
 
 Instruction: Execute this script and wait for an interface to appear on your game screen.
@@ -10118,14 +10118,15 @@ addcmd('unloopgoto',{'noloopgoto'},function(args, speaker)
 	loopgoto = nil
 end)
 
-addcmd('headsit',{},function(args, speaker)
+addcmd('headsit', {}, function(args, speaker)
 	local players = getPlayer(args[1], speaker)
-	for i,v in pairs(players)do
+	for i, v in pairs(players) do
 		speaker.Character:FindFirstChildOfClass('Humanoid').Sit = true
 		headSit = game:GetService("RunService").Heartbeat:Connect(function()
 			if Players[v].Character ~= nil and getRoot(Players[v].Character) and getRoot(speaker.Character) then
 				if Players:FindFirstChild(Players[v].Name) and speaker.Character:FindFirstChildOfClass('Humanoid').Sit == true then
-					getRoot(speaker.Character).CFrame = getRoot(Players[v].Character).Head.CFrame --* CFrame.Angles(0,math.rad(0),0)* CFrame.new(0,1.6,0.4)
+					local headCFrame = getRoot(Players[v].Character).Head.CFrame
+					getRoot(speaker.Character).CFrame = headCFrame * CFrame.new(0, 1.6, 0) -- ตั้งตำแหน่งด้านบนหัว
 				else
 					headSit:Disconnect()
 				end
